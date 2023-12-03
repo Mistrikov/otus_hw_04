@@ -5,7 +5,8 @@ from sqlalchemy import (
     String,
     DateTime
 )
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import DeclarativeBase, scoped_session, sessionmaker
+
 from datetime import datetime
 from .config import engine
 

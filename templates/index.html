@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row row-cols-2 ">
+    <div class="card" class="col-6" style="width: 18rem;">
+        <img src="{{ url_for('static', filename='images/o-treug.png') }}" class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title">Треугольник</h5>
+            <p class="card-text">Треугольник - это геометрическая фигура...</p>
+            <a href="post/1/" class="btn btn-primary">Подробнее</a>
+        </div>
+    </div>
+    <div class="card" class="col-6" style="width: 18rem;">
+        <img src="{{ url_for('static', filename='images/o-treug.png') }}" class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title">Остроугольный треугольник</h5>
+            <p class="card-text">Треугольник у которого все три угла ...</p>
+            <a href="post/2/" class="btn btn-primary">Подробнее</a>
+        </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+        <img src="{{ url_for('static', filename='images/p-treug.png') }}" class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title">Прямоугольный треугольник</h5>
+            <p class="card-text">Треугольник у которого один из углов равен...</p>
+            <a href="post/3/" class="btn btn-primary">Подробнее</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
