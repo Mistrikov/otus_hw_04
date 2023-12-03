@@ -20,4 +20,5 @@ def post_by_id(id):
     return render_template(f'post{id}.html')
 
 if __name__ == '__main__':
-    app.run(host='10.8.0.9', port=5000)
+    #app.run(host='10.8.0.9', port=5000)
+    app.run(host='0.0.0.0', port=5000)
