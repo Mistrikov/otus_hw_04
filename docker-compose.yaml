@@ -1,0 +1,59 @@
+version: "3"
+
+services:
+  pg:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: blog
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user123
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+#    volumes:
+#      - db-data:/var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-d", "blog", "-U", "user" ]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+
+  dev-backend:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      pg:
+        condition: service_healthy
+    command: bash -c "
+      flask db upgrade
+      && python app.py
+      "
+
+  uwsgi-backend:
+    environment:
+      SQLALCHEMY_DATABASE_URI: "postgresql+psycopg2://user:user123@pg:5432/blog"
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      pg:
+        condition: service_healthy
+    command: bash -c "
+      flask db upgrade
+      && pip install gunicorn
+      && gunicorn wsgi:app -b 0.0.0.0
+      "
+
+  prod-backend:
+    environment:
+      SQLALCHEMY_DATABASE_URI: "postgresql+psycopg2://user:user123@pg:5432/blog"
+    build: .
+    ports:
+      - "9000:80"
+    depends_on:
+      pg:
+        condition: service_healthy
+
+#volumes:
+#  db-data:

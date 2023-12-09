@@ -1,50 +1,33 @@
-from sqlalchemy import (
-    Column,
-    Integer,
-    BigInteger,
-    String,
-    DateTime
-)
-from sqlalchemy.orm import DeclarativeBase, scoped_session, sessionmaker
+from .database import db
 
 from datetime import datetime
-from .config import engine
 
-class Base(DeclarativeBase):
-    pass
-
-class User(Base):
+class User(db.Model):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    login = Column(String(32), nullable=False, unique=True)
-    password = Column(String(32), nullable=False, unique=False)
-    username = Column(String(32), nullable=False, unique=False)
-    email = Column(String, nullable=True, unique=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    login = db.Column(db.String(32), nullable=False, unique=True)
+    password = db.Column(db.String(32), nullable=False, unique=False)
+    username = db.Column(db.String(32), nullable=False, unique=False)
+    email = db.Column(db.String, nullable=True, unique=True)
 
-class Post(Base):
+class Post(db.Model):
     __tablename__ = "posts"
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    author = Column(Integer, nullable=False, unique=False)
-    title = Column(String(100), nullable=True, unique=False)
-    content = Column(String(255), nullable=True, unique=False)
-    tags = Column(String(255), nullable=True, unique=False)
-    created_on = Column(DateTime(), default=datetime.now)
-    updated_on = Column(DateTime(), default=datetime.now, onupdate=datetime.now)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    author = db.Column(db.Integer, nullable=False, unique=False)
+    title = db.Column(db.String(100), nullable=True, unique=False)
+    content = db.Column(db.String(255), nullable=True, unique=False)
+    tags = db.Column(db.String(255), nullable=True, unique=False)
+    created_on = db.Column(db.DateTime(), default=datetime.now)
+    updated_on = db.Column(db.DateTime(), default=datetime.now, onupdate=datetime.now)
 
-class Comment(Base):
+class Comment(db.Model):
     __tablename__ = "comments"
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    post_id = Column(Integer, nullable=False, unique=False)
-    author = Column(Integer, nullable=False, unique=False)
-    content = Column(String(255), nullable=True, unique=False)
-    created_on = Column(DateTime(), default=datetime.now)
-    updated_on = Column(DateTime(), default=datetime.now, onupdate=datetime.now)
-
-# при импорте создается БД
-Base.metadata.drop_all(bind=engine)
-Base.metadata.create_all(bind=engine)
-
-
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    post_id = db.Column(db.Integer, nullable=False, unique=False)
+    author = db.Column(db.Integer, nullable=False, unique=False)
+    content = db.Column(db.String(255), nullable=True, unique=False)
+    created_on = db.Column(db.DateTime(), default=datetime.now)
+    updated_on = db.Column(db.DateTime(), default=datetime.now, onupdate=datetime.now)
