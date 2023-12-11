@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <div class="row row-cols-4 px-4 py-3">
     {% if PostMessages %}
         {% for PostMessage, User in PostMessages %}
     <div class="card" class="col-3" style="width: 18rem;">
-        <!--img src="{{ url_for('static', filename='images/o-treug.png') }}" class="card-img-top"-->
         <div class="card-body">
             <h5 class="card-title">{{PostMessage.title}}</h5>
-            <!--p class="card-text">{{PostMessage.content}}</p-->
             <div>{{PostMessage.content|safe}}</div>
             <div class='d-flex justify-content-end'>Автор: {{User.username}}</div>
             <a href="post/{{PostMessage.id}}/" class="btn btn-primary">Подробнее</a>
@@ -21,10 +20,8 @@
         <div class="card-body">
             <h5 class="card-title">Блог</h5>
             <p class="card-text">Еще нет постов</p>
-            <!--a href="#" class="btn btn-primary">Подробнее</a-->
         </div>
     </div>
     {% endif %}
-
 </div>
 {% endblock %}

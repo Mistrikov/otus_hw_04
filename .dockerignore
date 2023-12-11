@@ -10,17 +10,14 @@
 .taskcluster.yml
 
 # Docker
-docker-compose.yml
-Dockerfile
+#docker-compose.yml
+#Dockerfile
 .docker
 .dockerignore
 
 # Byte-compiled / optimized / DLL files
 **/__pycache__/
 **/*.py[cod]
-
-# C extensions
-*.so
 
 # Distribution / packaging
 .Python
@@ -74,16 +71,6 @@ target/
 .env
 .venv/
 venv/
-
-# PyCharm
-.idea
-
-# Python mode for VIM
-.ropeproject
-**/.ropeproject
-
-# Vim swap files
-**/*.swp
 
 # VS Code
 .vscode/

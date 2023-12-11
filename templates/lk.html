@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <h5 class="card-header">Личный кабинет</h5>
+    <div class="card-body">
+        <h5 class="card-title">Logged in User details</h5>
+        <div>
+            <ul>
+                <li>Username: {{ current_user.username }}</li>
+                <li>Email: {{ current_user.email }}</li>
+                <li>Created on: {{ current_user.created_on }}</li>
+                <li>Updated on: {{ current_user.updated_on }}</li>
+            </ul>
+            </div>    
+    </div>
+</div>
+<a href="/" class="btn btn-primary">На главную</a>
+{% endblock %}

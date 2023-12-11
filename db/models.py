@@ -1,16 +1,26 @@
 from .database import db
 
+from werkzeug.security import generate_password_hash,  check_password_hash
 from datetime import datetime
+from flask_login import UserMixin
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     login = db.Column(db.String(32), nullable=False, unique=True)
-    password = db.Column(db.String(32), nullable=False, unique=False)
+    password = db.Column(db.String(512), nullable=False, unique=False)
     username = db.Column(db.String(32), nullable=False, unique=False)
-    email = db.Column(db.String, nullable=True, unique=True)
+    email = db.Column(db.String, nullable=False, unique=True)
+    def __repr__(self):
+        return self.username
 
+    def set_password(self, passwd):
+	    self.password = generate_password_hash(passwd)
+
+    def check_password(self,  passwd):
+	    return check_password_hash(self.password, passwd)
+    
 class Post(db.Model):
     __tablename__ = "posts"
 

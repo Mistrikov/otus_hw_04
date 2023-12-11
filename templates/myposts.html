@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row row-cols-4 px-4 py-3"></div>
+{% if PostMessages %}
+<table class="table table-striped">
+    <tr>
+        <th>Название поста</th>
+        <th>Дата создания</th>
+        <th>Дата обновления</th>
+        <th>Действия</th>
+    </tr>
+    {% for PostMessage in PostMessages %}
+    <tr>
+        <td><a href="/post/{{PostMessage.id}}">{{ PostMessage.title }}</a></td>
+        <td>{{ PostMessage.created_on }}</td>
+        <td>{{ PostMessage.updated_on }}</td>
+        <td><a href="/editpost/{{ PostMessage.id }}">Править</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+</div>
+{% if current_user.is_authenticated %}
+    <div class="row">
+        <div>
+            <a href="/newpost" class="btn btn-primary">Новый пост</a>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

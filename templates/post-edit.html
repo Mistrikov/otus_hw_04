@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if form.errors %}
+<div class="alert alert-danger" role="alert">
+    {{form.errors}}
+  </div>
+{% endif %}
+<div class="card">
+    <h5 class="card-header">
+        {% if PostMessage %} 
+            Редактирование поста
+        {% else %}
+            Новый пост
+        {% endif %}
+    </h5>
+    <div class="card-body">
+        <h5 class="card-title"></h5>
+        <div>
+            <form method="POST">
+            {{ form.csrf_token }}
+            {{ form.hidden_tag() }}
+            {{ form.titleedt.label }} {{ form.titleedt(class="form-control", value=PostMessage.title) }}
+            {{ ckeditor.create(name='contentedt', value=PostMessage.content) }}
+            {{ form.tagsedt.label }} {{ form.tagsedt(class="form-control", value=PostMessage.tags) }}
+            <input class="btn btn-primary" type="submit" value="Сохранить"> <a href="/" class="btn btn-default">Отмена</a>
+        </form>
+        {{ ckeditor.load() }}
+    </div>       
+    </div>
+</div>
+{% endblock %}

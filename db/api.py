@@ -1,6 +1,7 @@
 from typing import Sequence
 import contextlib
 import json
+from werkzeug.security import generate_password_hash
 
 from sqlalchemy import (
     Column,
@@ -23,17 +24,25 @@ def create_user(
     login: str,
     password: str,
     username: str,
-    email: str | None = None,
-) -> User:
+    email: str,
+) -> User | None:
     user = User(
         login=login,
-        password=password,
+        password=generate_password_hash(password),
         username=username,
         email=email,
     )
     session.add(user)
     session.commit()
     return user
+
+def isExistUser(
+    session: Session,
+    login: str,
+    email: str,
+) -> User | None:
+    count = User.query.filter(func.lower(User.login) == func.lower(login) or func.lower(User.email) == func.lower(email)).count()
+    return count != 0
 
 def add_post(
     session: Session,
@@ -49,6 +58,22 @@ def add_post(
         tags=tags
     )
     session.add(post)
+    session.commit()
+    return post
+
+def update_post(
+    session: Session,
+    id: int,
+    author: int,
+    title: str,
+    content: str, 
+    tags: str | None = None,
+) -> Post:
+    post = session.get(Post, id)
+    #post.author=author,
+    post.title=title,
+    post.content=content,
+    post.tags=tags
     session.commit()
     return post
 
@@ -103,10 +128,9 @@ def get_users(
     users = session.scalars(stmt).all()
     return users
 
-def get_posts_by_id(
+def get_post_by_id(
     session: Session,
-    author_id: int,
-) -> Sequence[Post]:
-    stmt = select(Post).where(func.lower(Post.author) == func.lower(author_id))
-    posts = session.scalars(stmt).all()
-    return posts
+    post_id: int,
+) -> Post | None:
+    post = session.get(Post, post_id)
+    return post

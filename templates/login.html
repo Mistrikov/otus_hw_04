@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if message %}
+<div class="alert alert-danger" role="alert">
+    {{message}}
+  </div>
+{% endif %}
+{% if form.errors %}
+<div class="alert alert-danger" role="alert">
+    {{form.errors}}
+  </div>
+{% endif %}
+<div class="card">
+    <h5 class="card-header">Вход</h5>
+    <div class="card-body">
+        <h5 class="card-title"></h5>
+        <div>
+            <form method="POST">
+                {{ form.csrf_token }}
+                {{ form.loginedt.label }} {{ form.loginedt(class="form-control width: 250") }}
+                {{ form.passwdedt.label }} {{ form.passwdedt(class="form-control") }}
+                <input class="btn btn-primary" type="submit" value="Войти">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

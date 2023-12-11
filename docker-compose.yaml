@@ -25,35 +25,16 @@ services:
     depends_on:
       pg:
         condition: service_healthy
-    command: bash -c "
-      flask db upgrade
-      && python app.py
-      "
-
-  uwsgi-backend:
-    environment:
-      SQLALCHEMY_DATABASE_URI: "postgresql+psycopg2://user:user123@pg:5432/blog"
+    command: bash -c "flask db upgrade && python app.py "
+  
+  demo-backend:
     build: .
     ports:
       - "5000:5000"
     depends_on:
       pg:
         condition: service_healthy
-    command: bash -c "
-      flask db upgrade
-      && pip install gunicorn
-      && gunicorn wsgi:app -b 0.0.0.0
-      "
-
-  prod-backend:
-    environment:
-      SQLALCHEMY_DATABASE_URI: "postgresql+psycopg2://user:user123@pg:5432/blog"
-    build: .
-    ports:
-      - "9000:80"
-    depends_on:
-      pg:
-        condition: service_healthy
+    command: bash -c "flask db upgrade && flask add-demo && python app.py "
 
 #volumes:
 #  db-data:

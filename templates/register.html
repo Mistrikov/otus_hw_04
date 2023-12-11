@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if message %}
+<div class="alert alert-danger" role="alert">
+    {{message}}
+  </div>
+{% endif %}
+{% if form.errors %}
+<div class="alert alert-danger" role="alert">
+    {{form.errors}}
+  </div>
+{% endif %}
+<div class="row">
+    <h5 class="card-header">Регистрация в блоге</h5>
+    <div class="card-body">
+        <h5 class="card-title">Анкета</h5>
+        <div>
+            <form method="POST">
+                {{ form.csrf_token }}
+                {{ form.usernameedt.label }} {{ form.usernameedt(class="form-control") }}
+                {{ form.loginedt.label }} {{ form.loginedt(class="form-control") }}
+                {{ form.emailedt.label }} {{ form.emailedt(class="form-control") }}
+                {{ form.passwdedt.label }} {{ form.passwdedt(class="form-control") }}
+                {{ form.passwd2edt.label }} {{ form.passwd2edt(class="form-control") }}
+                <input class="btn btn-primary" type="submit" value="Save">
+            </form>
+        </div>  
+    </div>
+</div>
+<a href="/" class="btn btn-primary">Назад</a>
+{% endblock %}
