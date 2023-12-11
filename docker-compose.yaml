@@ -27,14 +27,6 @@ services:
         condition: service_healthy
     command: bash -c "flask db upgrade && python app.py "
   
-  demo-backend:
-    build: .
-    ports:
-      - "5000:5000"
-    depends_on:
-      pg:
-        condition: service_healthy
-    command: bash -c "flask db upgrade && flask add-demo && python app.py "
 
 #volumes:
 #  db-data:

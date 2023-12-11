@@ -25,14 +25,14 @@
           </li>
           {% if current_user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/myposts">Мои посты</a>
+            <a class="nav-link active" aria-current="page" href="/myposts/">Мои посты</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/newpost">Новый пост</a>
+            <a class="nav-link active" aria-current="page" href="/newpost/">Новый пост</a>
           </li>
           {% endif %}
           <li class="nav-item">
-            <a class="nav-link" href="aboutus/">О нас</a>
+            <a class="nav-link" href="/aboutus/">О нас</a>
           </li>
           
           <!--li class="nav-item dropdown">
@@ -52,11 +52,11 @@
         <div >
           {% if current_user.is_authenticated %}
           Вы вошли как: {{ current_user.username }}
-          <a href="/logout">Выйти</a>
+          <a href="/logout/">Выйти</a>
           {% else%}
           Вы вошли как: Гость
-          <a href="/register">Зарегистрироваться</a>
-          <a href="/login">Войти</a>
+          <a href="/register/">Зарегистрироваться</a>
+          <a href="/login/">Войти</a>
           {% endif %}
         </div>
 

@@ -22,7 +22,7 @@ secret_key = getenv('SECRET_KEY', 'no_key_(')
 DEFAULT_DB_URI = 'postgresql+psycopg2://user:user123@pg:5432/blog'
 
 database_uri = getenv('SQLALCHEMY_DATABASE_URI', DEFAULT_DB_URI)
-print('database_uri', database_uri)
+#print('database_uri', database_uri)
 
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
@@ -56,7 +56,7 @@ def index():
     PostMessages = db.session.query(Post, User).join(User, User.id == Post.author, isouter=True).all()
     return render_template('index.html', PostMessages=PostMessages, message='')
 
-@app.route('/myposts')
+@app.route('/myposts/')
 def myposts():
     PostMessages = db.session.query(Post).where(Post.author == current_user.id).all()
     return render_template('myposts.html', PostMessages=PostMessages, message='')
@@ -72,7 +72,7 @@ def post_by_id(post_id):
         author = User.query.get(PostMessage.author)
     return render_template('post.html', PostMessage=PostMessage, author=author)
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
     if not current_user.is_authenticated:
         form = LoginForm()
@@ -81,12 +81,12 @@ def login():
             #print('user', user)
             if user and user.check_password(form.passwdedt.data):
                 login_user(user)
-                return redirect('/myposts')
+                return redirect('/myposts/')
             return render_template('login.html', form=form, message='Неверный логин или пароль')
         return render_template('login.html', form=form, message='')
     return render_template('lk.html')
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register/', methods=['GET', 'POST'])
 def register():
     if not current_user.is_authenticated:
         form = RegForm()
@@ -96,35 +96,35 @@ def register():
                 if not isExistUser(db.session, login=form.loginedt.data, email=form.emailedt.data):
                     user = create_user(db.session, login=form.loginedt.data, password=form.passwdedt.data, username=form.usernameedt.data, email=form.emailedt.data)
                     login_user(user)
-                    return redirect('/myposts') 
+                    return redirect('/myposts/') 
                 return render_template('register.html', form=form, message='Пользователь с таким логином или почтой уже существует')     
             return render_template('register.html', form=form)
         return render_template('register.html', form=form)
-    return redirect('/lk')
+    return redirect('/lk/')
 
-@app.route('/logout')
+@app.route('/logout/')
 @login_required
 def logout():
     logout_user() 
     return redirect('/')
 
-@app.route('/lk')
+@app.route('/lk/')
 @login_required
 def lk():
     return render_template('lk.html')
 
-@app.route('/newpost', methods=['GET', 'POST'])
+@app.route('/newpost/', methods=['GET', 'POST'])
 @login_required
 def newpost():
     if current_user.is_authenticated:
         form = EditPost()
         if form.validate_on_submit():
             add_post(db.session, author=current_user.id, title=form.titleedt.data, content=form.contentedt.data, tags=form.tagsedt.data)
-            return redirect('/myposts')
+            return redirect('/myposts/')
         return render_template('post-edit.html', form=form, PostMessage=None)
     return redirect('/')
 
-@app.route('/editpost/<int:post_id>', methods=['GET', 'POST'])
+@app.route('/editpost/<int:post_id>/', methods=['GET', 'POST'])
 @login_required
 def editpost(post_id):
     if current_user.is_authenticated:
@@ -132,7 +132,7 @@ def editpost(post_id):
         form = EditPost()
         if form.validate_on_submit():
             update_post(db.session, id=PostMessage.id, author=current_user.id, title=form.titleedt.data, content=form.contentedt.data, tags=form.tagsedt.data)
-            return redirect('/myposts')
+            return redirect('/myposts/')
         message = ''
         return render_template('post-edit.html', form=form, PostMessage=PostMessage, message=message)
     return redirect('/')

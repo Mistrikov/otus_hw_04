@@ -13,10 +13,10 @@
     </tr>
     {% for PostMessage in PostMessages %}
     <tr>
-        <td><a href="/post/{{PostMessage.id}}">{{ PostMessage.title }}</a></td>
+        <td><a href="/post/{{PostMessage.id}}/">{{ PostMessage.title }}</a></td>
         <td>{{ PostMessage.created_on }}</td>
         <td>{{ PostMessage.updated_on }}</td>
-        <td><a href="/editpost/{{ PostMessage.id }}">Править</a></td>
+        <td><a href="/editpost/{{ PostMessage.id }}/">Править</a></td>
     </tr>
     {% endfor %}
 </table>
@@ -25,7 +25,7 @@
 {% if current_user.is_authenticated %}
     <div class="row">
         <div>
-            <a href="/newpost" class="btn btn-primary">Новый пост</a>
+            <a href="/newpost/" class="btn btn-primary">Новый пост</a>
         </div>
     </div>
 {% endif %}

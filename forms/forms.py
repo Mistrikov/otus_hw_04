@@ -9,9 +9,9 @@ class LoginForm(FlaskForm):
     passwdedt = PasswordField('Пароль', validators=[DataRequired()])
 
 class RegForm(FlaskForm):
-    loginedt = StringField('Логин', validators=[DataRequired(), Length(min=4)], default='igor1')
-    emailedt = EmailField('Электронная почта', validators=[DataRequired(), Email()], default='igor@mail.ru')
-    usernameedt = StringField('Ваше имя', validators=[DataRequired(), Length(min=3, max=25)], default='Игорь')
+    loginedt = StringField('Логин', validators=[DataRequired(), Length(min=4)])
+    emailedt = EmailField('Электронная почта', validators=[DataRequired(), Email()])
+    usernameedt = StringField('Ваше имя', validators=[DataRequired(), Length(min=3, max=25)])
     passwdedt = PasswordField('Пароль', validators=[DataRequired(), Length(min=4)])
     passwd2edt = PasswordField('Подтверждение пароля', validators=[DataRequired(), Length(min=4)])
 
